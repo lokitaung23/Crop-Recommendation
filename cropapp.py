@@ -246,7 +246,7 @@ st.markdown(f"""
 <div class="header-card">
   <div class="header-logo">{logo_img}</div>
   <div class="header-title">
-    <h1>Kenya Central Highlands Crop Recommendation (RF + RL)</h1>
+    <h1>Kenya Central Highlands Crop Recommendation System</h1>
     <p>Farmer-centered. Feedback-powered. Continuously learning.</p>
   </div>
 </div>
