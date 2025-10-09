@@ -714,17 +714,7 @@ if "📈 Reports" in TAB:
         tmp = tmp.set_index("Timestamp_dt").sort_index()
         tmp["HasFeedback"] = tmp["Reward"].notna().astype(int) if "Reward" in tmp.columns else 0
         
-        # weekly counts and feedback %
-        wk = tmp.resample("W").agg(
-            Predictions=("HasFeedback", "count"),
-            WithFeedback=("HasFeedback", "sum"),
-        )
-        if not wk.empty:
-            wk["FeedbackRate"] = wk["WithFeedback"] / wk["Predictions"]
-            st.line_chart(wk[["Predictions"]])
-            st.line_chart(wk[["FeedbackRate"]])
-        else:
-            st.info("Not enough dated data to plot feedback trends.")
+        
 
 
         # ---- Filtered rows (defensive handling) ----
