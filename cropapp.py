@@ -13,6 +13,14 @@ import pandas as pd
 import pickle
 import streamlit as st
 
+st.set_page_config(
+    page_title="Crop Advisor — Kenya Central Highlands",
+    page_icon="🌾",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
+
 # =========================================
 # Load env + Supabase client
 # =========================================
