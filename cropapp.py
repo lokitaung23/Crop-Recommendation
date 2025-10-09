@@ -730,7 +730,7 @@ if "📈 Reports" in TAB:
         else:
             st.info("Need FarmNumber and Timestamp for retention.")
 
-        # ---- Confidence calibration ----
+        # ---- Confidence calibrationn ----
         st.subheader("🎚️ Base confidence vs. observed success")
         cols = {"BaseProbChosen","Reward"}
         if cols.issubset(df.columns):
