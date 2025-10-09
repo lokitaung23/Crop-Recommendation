@@ -674,6 +674,7 @@ if "📈 Reports" in TAB:
         st.divider()
 
         # ---- Top crops ---
+        st.dataframe(sel_counts, use_container_width=True, hide_index=True)
         chosen_col = "RL_Chosen_Crop" if "RL_Chosen_Crop" in df.columns else "Base_Top1"
         st.subheader("🏆 Top Crops (by selections)")
 
