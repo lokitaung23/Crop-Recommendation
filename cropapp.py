@@ -292,7 +292,7 @@ div[data-testid="stForm"] .stButton>button {
 </style>
 """, unsafe_allow_html=True)
 
-logo_img = f'<img src="{LOGO_SRC}" width="70">' if LOGO_SRC else ""
+logo_img = f'<img src="{LOGO_SRC}" width="100">' if LOGO_SRC else ""
 st.markdown(f"""
 <div class="header-card">
   <div class="header-logo">{logo_img}</div>
