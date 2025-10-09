@@ -711,6 +711,24 @@ if "📈 Reports" in TAB:
         else:
             st.info("No farm-level data to display.")
 
+        st.subheader("🔁 Farm retention & revisit intervals")
+        if {"FarmNumber","Timestamp"}.issubset(df.columns):
+            tmp = df.dropna(subset=["FarmNumber","Timestamp"]).copy()
+            tmp["Timestamp_dt"] = pd.to_datetime(tmp["Timestamp"], errors="coerce")
+            g = tmp.sort_values("Timestamp_dt").groupby("FarmNumber")["Timestamp_dt"].apply(list).reset_index()
+        
+            import numpy as np
+            def gaps(lst):
+                if len(lst) < 2: return np.nan
+                arr = pd.Series(lst).sort_values()
+                return (arr.diff().dt.days.dropna()).mean()
+            g["AvgDaysBetweenVisits"] = g["Timestamp_dt"].apply(gaps)
+            g["Visits"] = g["Timestamp_dt"].apply(len)
+        
+            st.dataframe(g.sort_values(["Visits","AvgDaysBetweenVisits"], ascending=[False, True]),
+                         use_container_width=True, hide_index=True)
+        else:
+            st.info("Need FarmNumber and Timestamp for retention.")
 
         
         
