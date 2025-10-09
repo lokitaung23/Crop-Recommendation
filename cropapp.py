@@ -674,7 +674,6 @@ if "📈 Reports" in TAB:
         st.divider()
 
         # ---- Top crops ---
-        st.dataframe(sel_counts, use_container_width=True, hide_index=True)
         chosen_col = "RL_Chosen_Crop" if "RL_Chosen_Crop" in df.columns else "Base_Top1"
         st.subheader("🏆 Top Crops (by selections)")
 
@@ -688,8 +687,7 @@ if "📈 Reports" in TAB:
         # Add 1-based serial numbers
         sel_counts.index = sel_counts.index + 1
         sel_counts = sel_counts.rename_axis("No.").reset_index()
-
-        st.dataframe(sel_counts, use_container_width=True)
+        st.dataframe(sel_counts, use_container_width=True, hide_index=True)
         if not sel_counts.empty:
             st.bar_chart(sel_counts.set_index("Crop")[["Selections"]])
 
