@@ -707,16 +707,27 @@ if "📈 Reports" in TAB:
             if not success.empty:
                 st.bar_chart(success.set_index(chosen_col))
 
-        # ---- Weekly trends ----
-        st.subheader("📈 Feedback rate over time")
-        tmp = df.copy()
-        tmp["Timestamp_dt"] = pd.to_datetime(tmp.get("Timestamp"), errors="coerce")
-        tmp = tmp.set_index("Timestamp_dt").sort_index()
-        tmp["HasFeedback"] = tmp["Reward"].notna().astype(int) if "Reward" in tmp.columns else 0
+        st.subheader("🏠 Per-farm success & coverage")
+        chosen_col = "RL_Chosen_Crop" if "RL_Chosen_Crop" in df.columns else "Base_Top1"
+        cols = ["FarmNumber", chosen_col] + (["Reward"] if "Reward" in df.columns else [])
+        g = df.dropna(subset=["FarmNumber"])[cols].copy()
         
-        
+        if not g.empty:
+            agg = g.groupby("FarmNumber").agg(
+                Predictions=(chosen_col, "count"),
+                SuccessRate=("Reward", "mean") if "Reward" in g.columns else ("Reward", "sum")  # will be NaN if missing
+            ).reset_index()
+            agg = agg.sort_values(["Predictions"], ascending=False)
+            st.dataframe(agg, use_container_width=True, hide_index=True)
+            if "SuccessRate" in agg.columns and not agg["SuccessRate"].isna().all():
+                st.bar_chart(agg.set_index("FarmNumber")[["SuccessRate"]])
+        else:
+            st.info("No farm-level data to display.")
 
 
+        
+        
+    
         # ---- Filtered rows (defensive handling) ----
         st.subheader("🔎 Filtered rows")
         show_cols = [c for c in [
