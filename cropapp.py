@@ -240,12 +240,55 @@ LOGO_SRC = _logo_data_uri()
 # ---- Header Banner (HTML + CSS) ----
 st.markdown("""
 <style>
-.header-card {display:flex;align-items:center;background:#f9f9f9;border-radius:12px;
-              padding:15px 25px;margin-bottom:20px;box-shadow:0 2px 6px rgba(0,0,0,.1);}
-.header-logo {flex:0 0 auto;margin-right:20px;}
+:root {
+  --bg: #0e1117;
+  --card: #151823;
+  --muted: #a3a3a3;
+  --accent: #ec5b2a;
+  --success: #2ecc71;
+  --radius: 16px;
+}
+
+.block-container { padding-top: 1.2rem; max-width: 1200px; }
+
+.header-card {
+  display:flex; align-items:center; background:var(--card);
+  border-radius:var(--radius); padding:16px 22px; margin-bottom:14px;
+  box-shadow:0 4px 16px rgba(0,0,0,.25); border:1px solid rgba(255,255,255,.06);
+}
+.header-logo {flex:0 0 auto;margin-right:18px;}
 .header-title {flex:1 1 auto;}
-.header-title h1 {font-size:28px;margin:0;color:#2c3e50;}
-.header-title p {margin:2px 0 0;font-size:14px;color:#555;}
+.header-title h1 {font-size:26px;margin:0;color:#fff; letter-spacing:.2px;}
+.header-title p  {margin:4px 0 0;font-size:13px;color:var(--muted);}
+
+.card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+.soft { border-radius: 14px; }
+
+.stTabs [data-baseweb="tab-list"] { gap: 12px; }
+.stTabs [data-baseweb="tab"] {
+  background: var(--card); padding: 10px 14px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.stTabs [aria-selected="true"] { border-color: var(--accent); }
+
+div[data-testid="stForm"] .stButton>button {
+  width: 100%; height: 42px; border-radius: 12px;
+}
+
+.kpi { display:flex; gap:12px; }
+.kpi .pill {
+  background:#1c2333; border:1px solid rgba(255,255,255,.06);
+  padding:8px 12px; border-radius:999px; color:#fff; font-size:13px;
+}
+
+.stNumberInput input { border-radius:12px !important; }
+.stTextInput input { border-radius:12px !important; }
 </style>
 """, unsafe_allow_html=True)
 
