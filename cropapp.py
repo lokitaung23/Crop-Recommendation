@@ -692,20 +692,7 @@ if "📈 Reports" in TAB:
             st.bar_chart(sel_counts.set_index("Crop")[["Selections"]])
 
 
-        # ---- Success rate per crop ----
-        if "Reward" in df.columns and df["Reward"].notna().any():
-            st.subheader("✅ Success rate per crop")
-            success = (
-                df.dropna(subset=["Reward"])
-                  .groupby(chosen_col)["Reward"]
-                  .mean()
-                  .sort_values(ascending=False)
-                  .rename("SuccessRate")
-                  .reset_index()
-            )
-            st.dataframe(sel_counts, use_container_width=True, hide_index=True)
-            if not success.empty:
-                st.bar_chart(success.set_index(chosen_col))
+       
 
         st.subheader("🏠 Per-farm success & coverage")
         chosen_col = "RL_Chosen_Crop" if "RL_Chosen_Crop" in df.columns else "Base_Top1"
