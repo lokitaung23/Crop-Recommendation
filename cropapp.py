@@ -703,31 +703,29 @@ if "📈 Reports" in TAB:
                   .rename("SuccessRate")
                   .reset_index()
             )
-            st.dataframe(success, use_container_width=True)
+            st.dataframe(sel_counts, use_container_width=True, hide_index=True)
             if not success.empty:
                 st.bar_chart(success.set_index(chosen_col))
 
         # ---- Weekly trends ----
-        st.subheader("📅 Weekly trend")
+        st.subheader("📈 Feedback rate over time")
         tmp = df.copy()
-        if "Timestamp_dt" not in tmp.columns:
-            tmp["Timestamp_dt"] = pd.to_datetime(tmp.get("Timestamp"), errors="coerce")
+        tmp["Timestamp_dt"] = pd.to_datetime(tmp.get("Timestamp"), errors="coerce")
         tmp = tmp.set_index("Timestamp_dt").sort_index()
-        if tmp.index.notna().any():
-            weekly = tmp.resample("W").agg({
-                "Reward": "mean" if "Reward" in tmp.columns else "sum",
-                chosen_col: "count"
-            }).rename(columns={chosen_col: "Predictions"})
-            if not weekly.empty:
-                st.line_chart(weekly[["Predictions"]])
-                if "Reward" in tmp.columns:
-                    st.line_chart(weekly[["Reward"]])
-            else:
-                st.info("Not enough dated data to plot weekly trend.")
+        tmp["HasFeedback"] = tmp["Reward"].notna().astype(int) if "Reward" in tmp.columns else 0
+        
+        # weekly counts and feedback %
+        wk = tmp.resample("W").agg(
+            Predictions=("HasFeedback", "count"),
+            WithFeedback=("HasFeedback", "sum"),
+        )
+        if not wk.empty:
+            wk["FeedbackRate"] = wk["WithFeedback"] / wk["Predictions"]
+            st.line_chart(wk[["Predictions"]])
+            st.line_chart(wk[["FeedbackRate"]])
         else:
-            st.info("No valid timestamps available to plot trends.")
+            st.info("Not enough dated data to plot feedback trends.")
 
-        st.divider()
 
         # ---- Filtered rows (defensive handling) ----
         st.subheader("🔎 Filtered rows")
