@@ -684,13 +684,13 @@ if "📈 Reports" in TAB:
                 .reset_index(name="Selections")
         )
 
-# Add 1-based serial numbers
-sel_counts.index = sel_counts.index + 1
-sel_counts = sel_counts.rename_axis("No.").reset_index()
+        # Add 1-based serial numbers
+        sel_counts.index = sel_counts.index + 1
+        sel_counts = sel_counts.rename_axis("No.").reset_index()
 
-st.dataframe(sel_counts, use_container_width=True)
-if not sel_counts.empty:
-    st.bar_chart(sel_counts.set_index("Crop")[["Selections"]])
+        st.dataframe(sel_counts, use_container_width=True)
+        if not sel_counts.empty:
+            st.bar_chart(sel_counts.set_index("Crop")[["Selections"]])
 
 
         # ---- Success rate per crop ----
