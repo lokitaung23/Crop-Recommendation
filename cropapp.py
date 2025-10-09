@@ -673,16 +673,16 @@ if "📈 Reports" in TAB:
 
         st.divider()
 
-# ---- Top crops ----
-chosen_col = "RL_Chosen_Crop" if "RL_Chosen_Crop" in df.columns else "Base_Top1"
-st.subheader("🏆 Top Crops (by selections)")
+        # ---- Top crops ----
+        chosen_col = "RL_Chosen_Crop" if "RL_Chosen_Crop" in df.columns else "Base_Top1"
+        st.subheader("🏆 Top Crops (by selections)")
 
-sel_counts = (
-    df[chosen_col]
-      .value_counts()
-      .rename_axis("Crop")
-      .reset_index(name="Selections")
-)
+        sel_counts = (
+            df[chosen_col]
+                .value_counts()
+                .rename_axis("Crop")
+                .reset_index(name="Selections")
+        )
 
 # Add 1-based serial numbers
 sel_counts.index = sel_counts.index + 1
