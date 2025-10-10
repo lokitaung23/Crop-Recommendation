@@ -730,20 +730,7 @@ if "📈 Reports" in TAB:
         else:
             st.info("Need FarmNumber and Timestamp for retention.")
 
-        # ---- Confidence calibrationn ----
-        st.subheader("🎚️ Base confidence vs. observed success")
-        cols = {"BaseProbChosen","Reward"}
-        if cols.issubset(df.columns):
-            tmp = df.dropna(subset=list(cols)).copy()
-            tmp["ProbBin"] = pd.cut(tmp["BaseProbChosen"], bins=[0, .2, .4, .6, .8, 1.0], labels=["0–.2",".2–.4",".4–.6",".6–.8",".8–1.0"], include_lowest=True)
-            cal = tmp.groupby("ProbBin")["Reward"].mean().rename("SuccessRate").reset_index()
-            st.dataframe(cal, use_container_width=True, hide_index=True)
-            if not cal.empty:
-                st.bar_chart(cal.set_index("ProbBin")[["SuccessRate"]])
-        else:
-            st.info("Need BaseProbChosen and Reward to plot calibration.")
-
-        
+               
     
         # ---- Filtered rows (defensive handling) ----
         st.subheader("🔎 Filtered rows")
