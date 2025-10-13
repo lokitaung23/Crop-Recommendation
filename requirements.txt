@@ -31,6 +31,8 @@ streamlit
 scikit-learn
 matplotlib
 seaborn
+plotly
+
 
 
 
